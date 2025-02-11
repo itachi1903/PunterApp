@@ -5,15 +5,17 @@ import {
     TextInput,
     TouchableOpacity,
     StyleSheet,
+    Alert,
 } from "react-native";
 import { Formik } from "formik";
 import * as Yup from "yup";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { styles } from "@/styles/Loginstyle";
 import FloatingLabelInput from "@/componenetsUi/login/floatingLabelInput";
-import { Link } from "expo-router";
+import { Link, useRouter } from "expo-router";
 
 const Login = () => {
+    const router = useRouter()
     const validationSchema = Yup.object().shape({
         email: Yup.string()
             .email("Enter a valid email")
@@ -22,6 +24,11 @@ const Login = () => {
             .min(6, "Password must be at least 6 characters")
             .required("Password is required"),
     });
+    const handleCompleteSubmit = (value: { email: string, password: string }) => {
+        console.log("Login Data:", value);
+        Alert.alert("logined!!")
+        router.push('/')
+    }
 
     return (
         <SafeAreaView style={styles.container}>
@@ -34,6 +41,7 @@ const Login = () => {
                 validationSchema={validationSchema}
                 onSubmit={(values, { resetForm }) => {
                     console.log("Login Data:", values);
+                    handleCompleteSubmit(values)
                     resetForm();
                 }}
             >
@@ -46,7 +54,7 @@ const Login = () => {
                             onChangeText={handleChange("email")}
                             onBlur={handleBlur("email")}
                             keyboardType="email-address"
-                            error={touched.email && errors.email}
+                            error={touched.email && errors.email ? errors.email : undefined}
                         />
 
                         {/* Password Input */}
@@ -56,16 +64,16 @@ const Login = () => {
                             onChangeText={handleChange("password")}
                             onBlur={handleBlur("password")}
                             secureTextEntry
-                            error={touched.password && errors.password}
+                            error={touched.password && errors.password ? errors.password : undefined}
                         />
 
                         {/* Forgot Password Link */}
-                        <TouchableOpacity>
+                        <Link href={"/forgetPassword"} style={{ alignSelf: "flex-end", marginBlock: 10 }}>
                             <Text style={styles.forgotPassword}>Forgot password?</Text>
-                        </TouchableOpacity>
+                        </Link>
 
                         {/* Login Button */}
-                        <TouchableOpacity style={styles.loginButton} onPress={handleSubmit}>
+                        <TouchableOpacity style={styles.loginButton} onPress={() => handleSubmit()}>
                             <Text style={styles.loginButtonText}>Login</Text>
                         </TouchableOpacity>
 

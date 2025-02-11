@@ -35,13 +35,25 @@ export default function RootLayout() {
           headerShown: false
         }}
       >
+        {/* get started */}
         <Stack.Screen name='index' />
+
+        {/* boarding screens */}
         <Stack.Screen name='onboarding_first' options={{ animation: "none" }} />
         <Stack.Screen name='onboarding_second' options={{ animation: "slide_from_right" }} />
         <Stack.Screen name='onboarding_third' options={{ animation: "slide_from_right" }} />
+
+        {/* login screens */}
         <Stack.Screen name='login' options={{animation:"fade_from_bottom"}} />
+        <Stack.Screen name='forgetPassword' options={{animation:"fade_from_bottom"}} />
+        <Stack.Screen name='forgetPasswordCode' />
+        <Stack.Screen name='resetPassword' />
+
+        {/* signup screen */}
         <Stack.Screen name='signup' options={{animation:"fade_from_bottom"}} />
         <Stack.Screen name='verifyEmail' options={{animation:"fade_from_bottom"}} />
+
+        {/* tabs and not found */}
         <Stack.Screen name="(tabs)" />
         <Stack.Screen name="+not-found" />
       </Stack>

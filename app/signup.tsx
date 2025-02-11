@@ -144,7 +144,7 @@ const Register = () => {
                             </TouchableOpacity>
                         </View>
 
-                        <TouchableOpacity style={styles.registerButton} onPress={handleSubmit}>
+                        <TouchableOpacity style={styles.registerButton} onPress={()=>handleSubmit()}>
                             <Text style={styles.registerButtonText}>Register</Text>
                         </TouchableOpacity>
 

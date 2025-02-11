@@ -11,11 +11,14 @@ import * as Yup from "yup";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { styles } from "@/styles/Loginstyle";
 import FloatingLabelInput from "@/componenetsUi/login/floatingLabelInput";
-import { styles as timerstyle }  from "@/styles/verifyStyle";
+import { styles as verifyStyle } from '@/styles/verifyStyle'
+import { useRouter } from "expo-router";
+
 
 const ForgetPasswordCode = () => {
   const [timer, setTimer] = useState(30); // Initial countdown
   const [codeSent, setCodeSent] = useState(false);
+  const router = useRouter()
 
   // ⏳ Countdown Timer for Resend
   useEffect(() => {
@@ -41,6 +44,11 @@ const ForgetPasswordCode = () => {
       .required("Code is required"),
   });
 
+  const handleCompleteSubmit = (value : string)=>{
+    Alert.alert("Submitted Code:", value);
+    router.push('/resetPassword');
+  }
+
   return (
     <SafeAreaView style={styles.container}>
       {/* Title */}
@@ -51,35 +59,38 @@ const ForgetPasswordCode = () => {
         initialValues={{ code: "" }}
         validationSchema={validationSchema}
         onSubmit={(values, { resetForm }) => {
-          Alert.alert("Submitted Code:", values.code);
+          handleCompleteSubmit(values.code)
           resetForm();
         }}
       >
         {({ handleChange, handleBlur, handleSubmit, values, errors, touched }) => (
           <View style={{ flex: 1, justifyContent: "space-between", paddingBottom: 20 }}>
             {/* Code Input */}
-            <FloatingLabelInput
-              label="Enter Code"
-              value={values.code}
-              onChangeText={handleChange("code")}
-              onBlur={handleBlur("code")}
-              keyboardType="number-pad"
-              error={touched.code && errors.code ? errors.code : undefined}
-            />
-
-            {/* Timer / Resend Code */}
-            {timer > 0 ? (
-              <Text style={timerstyle.timerText}>
-                Code will be resent in{" "}
-                <Text style={timerstyle.timerNumber}>{timer}s</Text>
-              </Text>
-            ) : (
-              <TouchableOpacity onPress={handleResendCode}>
-                <Text style={[timerstyle.timerText, { color: "#FFD700" }]}>
-                  Resend Code
-                </Text>
-              </TouchableOpacity>
-            )}
+            <View>
+                <FloatingLabelInput
+                  label="Enter Code"
+                  value={values.code}
+                  onChangeText={handleChange("code")}
+                  onBlur={handleBlur("code")}
+                  keyboardType="number-pad"
+                  maxLength={5}
+                  error={touched.code && errors.code ? errors.code : undefined}
+                />
+    
+                {/* Timer / Resend Code */}
+                {timer > 0 ? (
+                  <Text style={[verifyStyle.timerText,{alignSelf:"center"}]}>
+                    Code will be resent in{" "}
+                    <Text style={verifyStyle.timerNumber}>{timer}s</Text>
+                  </Text>
+                ) : (
+                  <TouchableOpacity onPress={handleResendCode} style={{alignSelf:"center"}}>
+                    <Text style={[verifyStyle.timerText, { color: "#FFD700" }]}>
+                      Resend Code
+                    </Text>
+                  </TouchableOpacity>
+                )}
+            </View>
 
             {/* Proceed Button */}
             <TouchableOpacity style={styles.loginButton} onPress={()=>handleSubmit()}>
