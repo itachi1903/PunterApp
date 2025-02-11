@@ -29,8 +29,20 @@ export default function RootLayout() {
 
   return (
     <ThemeProvider value={colorScheme === 'dark' ? DarkTheme : DefaultTheme}>
-      <Stack>
-        <Stack.Screen name="(tabs)" options={{ headerShown: false }} />
+      <Stack
+        screenOptions={{
+          animation: 'none',
+          headerShown: false
+        }}
+      >
+        <Stack.Screen name='index' />
+        <Stack.Screen name='onboarding_first' options={{ animation: "none" }} />
+        <Stack.Screen name='onboarding_second' options={{ animation: "slide_from_right" }} />
+        <Stack.Screen name='onboarding_third' options={{ animation: "slide_from_right" }} />
+        <Stack.Screen name='login' options={{animation:"fade_from_bottom"}} />
+        <Stack.Screen name='signup' options={{animation:"fade_from_bottom"}} />
+        <Stack.Screen name='verifyEmail' options={{animation:"fade_from_bottom"}} />
+        <Stack.Screen name="(tabs)" />
         <Stack.Screen name="+not-found" />
       </Stack>
       <StatusBar style="auto" />
