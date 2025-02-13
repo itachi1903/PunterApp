@@ -27,7 +27,7 @@ const Login = () => {
     const handleCompleteSubmit = (value: { email: string, password: string }) => {
         console.log("Login Data:", value);
         Alert.alert("logined!!")
-        router.push('/')
+        router.push('/(tabs)')
     }
 
     return (

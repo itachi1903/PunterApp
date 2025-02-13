@@ -18,7 +18,7 @@ const index = () => {
             <Image source={require("@/assets/main/logo.png")} style={styles.logo} />
 
             <View style={styles.buttoncan}>
-                <Pressable style={styles.buttonCan} onPress={() => router.push('/onboarding_first')}>
+                <Pressable style={styles.buttonCan} onPress={() => router.push('/(tabs)')}>
                     <Text style={styles.button}>Get Start</Text>
                 </Pressable>
             </View>

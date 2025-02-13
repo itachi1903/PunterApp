@@ -53,6 +53,12 @@ export default function RootLayout() {
         <Stack.Screen name='signup' options={{animation:"fade_from_bottom"}} />
         <Stack.Screen name='verifyEmail' options={{animation:"fade_from_bottom"}} />
 
+
+        {/* create post */}
+        <Stack.Screen name='createPost' options={{headerShown:true}} />
+
+
+
         {/* tabs and not found */}
         <Stack.Screen name="(tabs)" />
         <Stack.Screen name="+not-found" />
